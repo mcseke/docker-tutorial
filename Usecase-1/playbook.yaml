@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  become: true
+- hosts: localhost
+  become: false
   tasks:
   - name: stop if we have old docker container
     command: docker stop simple-devops-container
@@ -21,21 +21,6 @@
 
   - name: building docker image
     command: docker build -t simple-devops-image .
-    args:
-      chdir: /opt/docker
 
   - name: creating docker image
-    command: docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image
-
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
+    command: docker run -d --name simple-devops-container -p 18080:80 simple-devops-image
