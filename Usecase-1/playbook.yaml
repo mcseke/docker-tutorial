@@ -3,24 +3,41 @@
   become: false
   tasks:
   - name: stop if we have old docker container
-    command: docker stop simple-devops-container
+    command: docker stop hello-container
     ignore_errors: yes
 
   - name: remove stopped docker container
-    command: docker rm simple-devops-container
+    command: docker rm hello-container
     ignore_errors: yes
-
-  - name: remove current docker image
-    command: docker rmi simple-devops-image
-    ignore_errors: yes
-#    register: result
-#    failed_when:
-#      - result.rc == 0
-#      - '"docker" not in result.stdout'
-
 
   - name: building docker image
-    command: docker build -t simple-devops-image .
+    command: docker build -t martoncseke/hello .
 
-  - name: creating docker image
-    command: docker run -d --name simple-devops-container -p 18080:80 simple-devops-image
+  - name: creating docker container
+    command: docker run -d --name hello-container -p 18080:80 martoncseke/hello
+
+  - name: login dockerhub
+    command: docker login --username=martoncseke --password=Qay-wsx13
+
+  - name: publish to dockerhub
+    command: docker image push martoncseke/hello:latest
+
+  - name: delete to kubernetes
+    command: kubectl delete deployment hello
+    ignore_errors: yes
+  
+  - name: delete service to kubernetes
+    command: kubectl delete service hello-service
+    ignore_errors: yes
+
+  #- name: deploy to kubernetes
+  #  command: kubectl create deployment hello --image=martoncseke/hello
+
+  #- name: expose deployment
+  #  command: kubectl expose deployment hello --type=NodePort --port=31020
+
+  - name: create deployment
+    command: kubectl apply -f hello-world-example-deployment.yaml
+
+  - name: create service
+    command: kubectl apply -f hello-world-example-service.yaml

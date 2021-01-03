@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: hello-world-pictolearn
+  name: hello
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hello-world-pictolearn
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hello-world-pictolearn
+    spec:
+      containers:
+      - image: martoncseke/hello-world-pictolearn
+        name: hello
+        ports:
+        - containerPort: 18080
+
+
+#kubectl expose deployment hello --port 18080 --name hello-np --type NodePort

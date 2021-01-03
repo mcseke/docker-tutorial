@@ -1,0 +1,1 @@
+{"clusterName":"cluster","clusterID":"507ea855-fd67-4978-8e1b-9f589563ed6d","infraID":"cluster-hwn54","aws":{"region":"eu-west-2","identifier":[{"kubernetes.io/cluster/cluster-hwn54":"owned"},{"openshiftClusterID":"507ea855-fd67-4978-8e1b-9f589563ed6d"}]}}
