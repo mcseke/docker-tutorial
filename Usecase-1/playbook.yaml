@@ -11,16 +11,16 @@
     ignore_errors: yes
 
   - name: building docker image
-    command: docker build -t martoncseke/hello .
+    command: docker build -t martoncseke/hello-world-pictolearn .
 
   - name: creating docker container
-    command: docker run -d --name hello-container -p 18080:80 martoncseke/hello
+    command: docker run -d --name hello-container -p 18080:80 martoncseke/hello-world-pictolearn
 
   - name: login dockerhub
     command: docker login --username=martoncseke --password=Qay-wsx13
 
   - name: publish to dockerhub
-    command: docker image push martoncseke/hello:latest
+    command: docker image push martoncseke/hello-world-pictolearn:latest
 
   - name: delete to kubernetes
     command: kubectl delete deployment hello
